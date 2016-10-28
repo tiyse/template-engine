@@ -32,6 +32,7 @@ $tiyse->assign("{title}","Merhaba Dünyalı!");
 
 // tema dosyası
 // bellek kullanımı "main",200  tema=>önbellek dosyasını yenileme zamanı
+// bellek kapatmak için normal kullanım sağladığınızda bellekleme yapmayacaktır
 $tiyse->draw("main");
 
 ?>
