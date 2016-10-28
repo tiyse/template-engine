@@ -43,9 +43,9 @@ $tiyse->draw("main");
   <li>{value}</li>
   <li>{function="funcname()"}</li>
   <li>{include="filename"}</li>
-  <li>{if=""} test {/endif}</li>
-  <li>{if=""} test 0 {/else} test 1 {/endif}</li>
-  <li>{if=""} test 0 {elseif=""} test 1 {/else} test 2 {/endif}</li>
+  <li>{if="condition"} test {/endif}</li>
+  <li>{if="condition"} test 0 {/else} test 1 {/endif}</li>
+  <li>{if="condition"} test 0 {elseif="condition"} test 1 {/else} test 2 {/endif}</li>
   <li>{loop=""} {key} {value} {/loop}</li>
 </ul>
 
