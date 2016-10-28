@@ -90,3 +90,13 @@ $tiyse->assign("{content}","İçerik");
 </body>
 </html>
 ```
+
+### KONFİGRASYON
+
+Konfigrasyon bir sonraki versionda yapılacaktır. Yapılacak konfigrasyonlar aşağıda mevcuttur.
+
+<ul>
+  <li>ÖNBELLEK(cache) klasör belirleme.</li>
+  <li>TEMA(path dirname) yolu belirleme.</li>
+  <li>TEMA(template extension) dosya uzantısı belirleme şuan .tpl olarak standart dır.</li>
+</ul>
