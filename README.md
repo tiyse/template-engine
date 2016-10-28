@@ -31,6 +31,7 @@ $tiyse = new tiyse();
 $tiyse->assign("{title}","Merhaba Dünyalı!");
 
 // tema dosyası
+// bellek kullanımı "main",200  tema=>önbellek dosyasını yenileme zamanı
 $tiyse->draw("main");
 
 ?>
