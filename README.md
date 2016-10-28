@@ -49,7 +49,7 @@ $tiyse->draw("main");
 </ul>
 
 ```php
-/// değişken => atanan değer
+// değişken => atanan değer
 $tiyse->assign("{title}",'Başlık');
 $tiyse->assign("{content}","İçerik");
 ```
@@ -62,7 +62,30 @@ $tiyse->assign("{content}","İçerik");
 		<meta charset="utf-8" />
 	</head>
 <body>
+  <!-- değişken çağırma -->
   {content}
+  
+  <!-- tema dosyası çağırma -->
+  {include="main"}
+  
+  <!-- if -->
+  {if="5 == 5"} test {/endif}
+  
+  <!-- if - else -->
+  {if="5 == 5"}
+  	test 0
+  {/else}
+  	test 1
+  {/endif}
+  
+  <!-- if - else - elseif - endif -->
+  {if="5 == 5"}
+  	 test 0
+  {elseif="5 == 5"}
+  	test 1
+  {/else}
+  	test 2
+  {/endif}
 </body>
 </html>
 ```
