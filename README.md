@@ -67,6 +67,9 @@ $tiyse->assign("{content}","İçerik");
   <!-- değişken çağırma -->
   {content}
   
+  <!-- fonksiyon çağırabilirsiniz veya $tiyse->assign("{content}",'{function="funcname()"}'); -->
+  {function="funcname()"}
+  
   <!-- tema dosyası çağırma -->
   {include="main"}
   
