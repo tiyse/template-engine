@@ -82,7 +82,7 @@ $tiyse->assign("{content}","İçerik");
   <!-- if - else - elseif - endif -->
   {if="5 == 5"}
   	 test 0
-  {elseif="5 == 5"}
+  {elseif="5 == 6"}
   	test 1
   {/else}
   	test 2
