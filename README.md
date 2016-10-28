@@ -88,6 +88,9 @@ $tiyse->assign("{content}","İçerik");
   {/else}
   	test 2
   {/endif}
+  
+  <!-- dizi listeleme -->
+  {loop="array"} {key} {value} {/loop}
 </body>
 </html>
 ```
