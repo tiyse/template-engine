@@ -81,17 +81,17 @@ $tiyse->draw("main");
   <!--/ tema dosyası çağırma /-->
   {include="main"}
   
-  <!--/ if /-->
+  <!--/ if kullanımı /-->
   {if="5 == 5"} test {/endif}
   
-  <!--/ if - else /-->
+  <!--/ if - else kullanımı /-->
   {if="5 == 5"}
   	test 0
   {/else}
   	test 1
   {/endif}
   
-  <!--/ if - else - elseif - endif /-->
+  <!--/ if - else - elseif - endif kullanımı /-->
   {if="5 == 5"}
   	 test 0
   {elseif="5 == 6"}
