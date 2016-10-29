@@ -2,7 +2,7 @@
 İlk yayın sürecinde olduğumuz için sınıfımızı test edin ve deneyin. Test sürüm tamamlandığında bu alan üzerinden bilgilendirme sağlanacaktır. Bizi tercih ettiğiniz için teşekkür ederiz.
 
 # Tiyse Template Engine v.3.0.0 Release
-Merhaba, geliştiriciler tiyse tema motorunu geliştirmemin sebebi az kod çok iş ve karmaşanın engellenmesi algoritmik bir yapının kullananılması için hazırlamış olduğum bir operasyon yöntetim sistemidir.
+Merhaba, geliştiriciler tiyse tema motoru'nu geliştirmemin sebebi az kod çok iş ve karmaşanın engellenmesi için hazırlamış olduğum bir şablon yöntetim sistemidir.
 
 Oldukça başarılı hızlı bir yapıya sahip ayrıca alt yapılandırması ileriye yönelik stabil ve geliştirilebilir çalışmaktadır. Majör, Minor, Bug Fix, Build... gibi değişimleri version üzerinden belirtilecektir.
 
@@ -18,7 +18,6 @@ Sınıf dosyasında değişiklik yapmaz iseniz güncellemeleri sorunsuz yapabili
 </ul>
 
 ### KURULUM
-
 ```php
 <?php
 
@@ -31,14 +30,29 @@ $tiyse = new tiyse();
 $tiyse->assign("{title}","Merhaba Dünyalı!");
 
 // tema dosyası
-// bellek kullanımı "main",200  tema=>önbellek dosyasını yenileme zamanı
-// bellek kapatmak için normal kullanım sağladığınızda bellekleme yapmayacaktır
+$tiyse->draw("main",600);
+
+?>
+```
+
+### FONKSİYONLAR
+
+```php
+<?php
+
+// etiket değiştirmek isterseniz
+$tiyse->assign("{title}","Merhaba Dünyalı!");
+
+// önbellek oluşturmak isterseniz
+$tiyse->draw("main",600);
+
+// önbellek kullanmak istemezseniz
 $tiyse->draw("main");
 
 ?>
 ```
 
-### KULLANIM
+### ETİKETLER
 
 <ul>
   <li>{value}</li>
@@ -50,12 +64,6 @@ $tiyse->draw("main");
   <li>{loop=""} {key} {value} {/loop}</li>
 </ul>
 
-```php
-// değişken => atanan değer
-$tiyse->assign("{title}",'Başlık');
-$tiyse->assign("{content}","İçerik");
-```
-
 ```html
 <!DOCTYPE html>
 <html lang="tr">
@@ -64,26 +72,26 @@ $tiyse->assign("{content}","İçerik");
 		<meta charset="utf-8" />
 	</head>
 <body>
-  <!-- değişken çağırma -->
+  <!--/ değişken çağırma /-->
   {content}
   
   <!-- fonksiyon çağırabilirsiniz veya $tiyse->assign("{content}",'{function="funcname()"}'); -->
   {function="funcname()"}
   
-  <!-- tema dosyası çağırma -->
+  <!--/ tema dosyası çağırma /-->
   {include="main"}
   
-  <!-- if -->
+  <!--/ if /-->
   {if="5 == 5"} test {/endif}
   
-  <!-- if - else -->
+  <!--/ if - else /-->
   {if="5 == 5"}
   	test 0
   {/else}
   	test 1
   {/endif}
   
-  <!-- if - else - elseif - endif -->
+  <!--/ if - else - elseif - endif /-->
   {if="5 == 5"}
   	 test 0
   {elseif="5 == 6"}
@@ -92,7 +100,7 @@ $tiyse->assign("{content}","İçerik");
   	test 2
   {/endif}
   
-  <!-- dizi listeleme -->
+  <!--/ dizi listeleme /-->
   {loop="array"} {key} {value} {/loop}
 </body>
 </html>
