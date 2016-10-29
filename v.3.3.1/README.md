@@ -42,8 +42,8 @@ $tiyse->draw("main",600);
 
 // şablon ayarı
 $tiyse = new tiyse(array(
-	'cache_dir' => '/cache/',
-	'tpl_dir'   => '/templates/Default/',
+  'cache_dir' => '/cache/',
+  'tpl_dir'   => '/templates/Default/',
   'tpl_ext'   => 'tpl'
 ));
 
@@ -119,10 +119,10 @@ $tiyse->draw("main");
 
 $tiyse = new tiyse(array(
   // şablon önbellek klasörü
-	'cache_dir' => '/cache/',
+  'cache_dir' => '/cache/',
   // şablon klasörü
-	'tpl_dir'   => '/templates/Default/',
-	// şablon dosya uzantısı
+  'tpl_dir'   => '/templates/Default/',
+  // şablon dosya uzantısı
   'tpl_ext'   => 'tpl'
 ));
 
