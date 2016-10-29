@@ -1,4 +1,4 @@
-###### 29 Ekim 2016 Cuma - Duyuru;
+###### 29 Ekim 2016 Cumartesi - Duyuru;
 tiyse template engine kullanmaya hemen başlayabilirsiniz. Kendi iş çözümlerinizi ve bizden talep edilen isteklerinize hızlı şekilde cevap vereceğimize emin olabilirsiniz.
 
 # Tiyse Template Engine v.3.3.1
