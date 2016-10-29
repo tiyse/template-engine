@@ -1,7 +1,7 @@
-###### 28 Ekim 2016 Cuma - Duyuru;
-İlk yayın sürecinde olduğumuz için sınıfımızı test edin ve deneyin. Test sürüm tamamlandığında bu alan üzerinden bilgilendirme sağlanacaktır. Bizi tercih ettiğiniz için teşekkür ederiz.
+###### 29 Ekim 2016 Cuma - Duyuru;
+tiyse template engine kullanmaya hemen başlayabilirsiniz. Kendi iş çözümlerinizi ve bizden talep edilen isteklerinize hızlı şekilde cevap vereceğimize emin olabilirsiniz.
 
-# Tiyse Template Engine v.3.3.1 Release
+# Tiyse Template Engine v.3.3.1
 Merhaba, geliştiriciler tiyse tema motoru'nu geliştirmemin sebebi az kod çok iş ve karmaşanın engellenmesi için hazırlamış olduğum bir şablon yöntetim sistemidir.
 
 Oldukça başarılı hızlı bir yapıya sahip ayrıca alt yapılandırması ileriye yönelik stabil ve geliştirilebilir çalışmaktadır. Majör, Minor, Bug Fix, Build... gibi değişimleri version üzerinden belirtilecektir.
