@@ -75,12 +75,12 @@ $tiyse->draw("main");
 <!DOCTYPE html>
 <html lang="tr">
 	<head>
-		<title>{title}</title>
+		<title>{$title}</title>
 		<meta charset="utf-8" />
 	</head>
 <body>
   <!--/ değişken çağırma /-->
-  {content}
+  {$content}
   
   <!-- fonksiyon çağırabilirsiniz veya $tiyse->assign("{content}",'{function="funcname()"}'); -->
   {function="funcname()"}
@@ -109,7 +109,7 @@ $tiyse->draw("main");
   
   <!--/ dizi listeleme /-->
   {loop="array"}
-  	{key} {value}
+  	{$key} {$value}
   {/loop}
 </body>
 </html>
