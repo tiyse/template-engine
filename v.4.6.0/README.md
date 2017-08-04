@@ -108,7 +108,9 @@ $tiyse->draw("main");
   {/endif}
   
   <!--/ dizi listeleme /-->
-  {loop="array"} {key} {value} {/loop}
+  {loop="array"}
+  	{key} {value}
+  {/loop}
 </body>
 </html>
 ```
