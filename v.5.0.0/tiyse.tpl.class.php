@@ -1,141 +1,83 @@
-###### 29 Ekim 2016 Cumartesi - Duyuru;
-tiyse template engine kullanmaya hemen başlayabilirsiniz. Kendi iş çözümlerinizi ve bizden talep edilen isteklerinize hızlı şekilde cevap vereceğimize emin olabilirsiniz.
-
-# Tiyse Template Engine v.4.6.0
-Merhaba, geliştiriciler tiyse tema motoru'nu geliştirmemin sebebi az kod çok iş ve karmaşanın engellenmesi için hazırlamış olduğum bir şablon yöntetim sistemidir.
-
-Oldukça başarılı hızlı bir yapıya sahip ayrıca alt yapılandırması ileriye yönelik stabil ve geliştirilebilir çalışmaktadır. Majör, Minor, Bug Fix, Build... gibi değişimleri version üzerinden belirtilecektir.
-
-Sınıf dosyasında değişiklik yapmaz iseniz güncellemeleri sorunsuz yapabilirsiniz. Geliştirme esnasında mevcut fonksiyonu modellerken kullanabileceğiniz veya kullanmış olduğunuz yapıya göre güncellemeleri sağlayacağım.
-
-### SINIF ÖZELLİKLERİ
-<ul>
-  <li>ZLIB sıkıştırma algoritması</li>
-  <li>Kaynak kod sıkıştırma</li>
-  <li>Sıkıştırılmış önbellekleme</li>
-  <li>Şablon değiştirici ve operasyon</li>
-  <li>Stabil, performans ve hız</li>
-</ul>
-
-### KURULUM
-```php
 <?php
-
-include_once( __DIR__ ."/tiyse.tpl.class.php");
-
-// tiyse sınıf
-$tiyse = new tiyse();
-
-// değişken
-$tiyse->assign("{title}","Merhaba Dünyalı!");
-
-// tema dosyası
-$tiyse->draw("main",600);
-
+/*
+ * Kodlayan  : Ramazan ŞAHİN - GÜMÜŞHANE/TÜRKİYE
+ * Proje     : Template Engine - TEMA MOTORU
+ * E-Posta   : tiyse@outlook.com
+ * Version   : v.5.0.0
+ */
+class tiyse{
+	function __construct($setting = null){
+		if($setting == true){
+			$this->setting = $setting;
+		}else{
+			$this->setting = array(
+				'cache_dir'  => '/cache/',
+				'tpl_dir'    => '/',
+				'tpl_ext'    => 'tpl',
+				'gzcompress' => true,
+				'gzempty'    => true
+			);
+		}
+		
+	}
+	function draw($draw){
+		$tpl_file = $_SERVER["DOCUMENT_ROOT"].$this->setting["tpl_dir"].$draw.'.'.$this->setting["tpl_ext"];
+		$sys_file = $_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"].$draw.'_'.sha1(md5($draw)).'.php';
+		ob_start();
+		if(file_exists($tpl_file)){ include_once($tpl_file); }else{ echo "<code>Şablon mevcut değil: {$tpl_file}</code>"; }
+		$template = ob_get_contents();
+		ob_end_clean();
+		//$template = addcslashes($template, "'");
+		$template = preg_replace_callback('#\{\$(.*?)\}#msi', function($matches){
+			return '<?php echo $'.$matches[1].'; ?>';
+		},$template);
+		$template = preg_replace_callback('#\{function="(.*?)\((.*?)\)"\}#msi',function($matches){ if(is_callable($matches[1])){ return "<?php echo $matches[1]($matches[2]); ?>"; }else{ return $matches[0]; } },$template);
+		$template = preg_replace_callback('#\{loop="(.*?)"\}#msi',function($matches){ return '<?php foreach('.$matches[1].' as $key => $value){ ?>'; },$template);			
+		$template = preg_replace_callback('#\{\break}#msi',function($matches){ return '<?php break; ?>'; },$template);
+		$template = preg_replace_callback('#\{\continue}#msi',function($matches){ return '<?php continue; ?>'; },$template);
+		$template = preg_replace_callback('#\{\/endloop}#msi',function($matches){ return '<?php } ?>'; },$template);
+		$template = preg_replace_callback('#\{if="(.*?)"\}#msi',function($matches){ return '<?php if('.$matches[1].'){ ?>'; },$template);
+		$template = preg_replace_callback('#\{elseif="(.*?)"\}#msi',function($matches){ return '<?php }else if('.$matches[1].'){ ?>'; },$template);
+		$template = preg_replace_callback('#\{\/else}#msi',function($matches){ return '<?php }else{ ?>'; },$template);
+		$template = preg_replace_callback('#\{\/endif\}#msi',function($matches){ return '<?php } ?>'; },$template);
+		$template = preg_replace_callback('#\{include="(.*?)"\}#msi',function($matches){ $include = $_SERVER["DOCUMENT_ROOT"].$this->setting["tpl_dir"].$matches[1].'.'.$this->setting["tpl_ext"]; if(file_exists($include)){ return '<?php include_once("'.$include.'"); ?>'; }else{ return $matches[0]; } },$template);
+		$template = ($this->setting["gzempty"] == true) ? preg_replace("/\s+/", " ",$template) : $template;
+		if((strlen($template)+95) != @strlen(gzuncompress(file_get_contents($sys_file)))){ @unlink($sys_file); }
+		$this->compiler($template,$draw);
+		$this->cache($draw);
+	}
+	function assign($assign,$value = null){
+		if(is_array($assign)){
+			foreach($assign as $key => $value){
+				$this->assign[$key] = $value;
+			}
+		}else{
+			$this->assign[$assign] = $value;
+		}
+	}
+	function compiler($template,$draw){
+		$compilerfile = $_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"].$draw.'_'.sha1(md5($draw)).'.php';
+		if(!is_dir($_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"])){
+			$directory = mkdir($_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"],0777,true);
+			if($directory){
+				echo "<code>Klasör mevcut değil: {$this->setting["cache_dir"]}</code>";
+			}
+		}
+		if(is_dir($_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"]) && !file_exists($compilerfile)){
+			$secutiy = "<?php if(!defined('".sha1(md5($draw))."')) { die('Hacking attempt!'); } ?> ";
+			$compressed = ($this->setting["gzcompress"] == true) ? gzcompress($secutiy.$template, 9) : $secutiy.$template;
+			$file = fopen($compilerfile, "w");
+			fwrite($file, $compressed);
+			fclose($file);
+		}
+	}
+	function cache($draw){
+		$compilercache = $_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"].$draw.'_'.sha1(md5($draw)).'.php';
+		if(is_dir($_SERVER['DOCUMENT_ROOT'].$this->setting["cache_dir"]) && file_exists($compilercache)){
+			define(sha1(md5($draw)),true);
+			extract($this->assign);
+			return ($this->setting["gzcompress"] == true) ? eval(" ?> ".gzuncompress(file_get_contents($compilercache))." <?php ") : eval(" ?> ".file_get_contents($compilercache)." <?php ");
+		}
+	}
+}
 ?>
-```
-
-### FONKSİYONLAR
-
-```php
-<?php
-
-// şablon ayarı
-$tiyse = new tiyse(array(
-  'cache_dir' => '/cache/',
-  'tpl_dir'   => '/templates/Default/',
-  'tpl_ext'   => 'tpl'
-));
-
-// etiket değiştirmek isterseniz
-$tiyse->assign("{title}","Merhaba Dünyalı!");
-
-// önbellek oluşturmak isterseniz
-$tiyse->draw("main",600);
-
-// önbellek kullanmak istemezseniz
-$tiyse->draw("main");
-
-?>
-```
-
-### ETİKETLER
-
-<ul>
-  <li>{value}</li>
-  <li>{function="funcname()"}</li>
-  <li>{include="filename"}</li>
-  <li>{if="condition"} test {/endif}</li>
-  <li>{if="condition"} test 0 {/else} test 1 {/endif}</li>
-  <li>{if="condition"} test 0 {elseif="condition"} test 1 {/else} test 2 {/endif}</li>
-  <li>{loop=""} {key} {value} {/loop}</li>
-</ul>
-
-```html
-<!DOCTYPE html>
-<html lang="tr">
-	<head>
-		<title>{$title}</title>
-		<meta charset="utf-8" />
-	</head>
-<body>
-  <!--/ değişken çağırma /-->
-  {$content}
-  
-  <!-- fonksiyon çağırabilirsiniz veya $tiyse->assign("{content}",'{function="funcname()"}'); -->
-  {function="funcname()"}
-  
-  <!--/ tema dosyası çağırma /-->
-  {include="main"}
-  
-  <!--/ if kullanımı /-->
-  {if="5 == 5"} test {/endif}
-  
-  <!--/ if - else kullanımı /-->
-  {if="5 == 5"}
-  	test 0
-  {/else}
-  	test 1
-  {/endif}
-  
-  <!--/ if - else - elseif - endif kullanımı /-->
-  {if="5 == 5"}
-  	 test 0
-  {elseif="5 == 6"}
-  	test 1
-  {/else}
-  	test 2
-  {/endif}
-  
-  <!--/ dizi listeleme /-->
-  {loop="array"}
-  	{$key} {$value}
-  {/loop}
-</body>
-</html>
-```
-
-### KONFİGRASYON
-```php
-<?php
-
-$tiyse = new tiyse(array(
-  // şablon önbellek klasörü
-  'cache_dir' => '/cache/',
-  // şablon klasörü
-  'tpl_dir'   => '/templates/Default/',
-  // şablon dosya uzantısı
-  'tpl_ext'   => 'tpl'
-));
-
-?>
-```
-
-### GÜNCELLEMELER
-
-<ul>
-  <li>Önbellek klasör belirleme</li>
-  <li>Şablon klasör belirleme</li>
-  <li>Şablon dosya uzantısı belirleme</li>
-  <li>Şablon ve önbellek dosyası veya klasörü hata bildirimi</li>
-</ul>
