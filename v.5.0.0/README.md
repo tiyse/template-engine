@@ -11,25 +11,6 @@
 ```php
 <?php
 
-include_once( __DIR__ ."/tiyse.tpl.class.php");
-
-// tiyse sınıf
-$tiyse = new tiyse();
-
-// değişken
-$tiyse->assign("title","Merhaba Dünyalı!");
-
-// tema dosyası
-$tiyse->draw("main",600);
-
-?>
-```
-
-### FONKSİYONLAR
-
-```php
-<?php
-
 // şablon ayarı
 $tiyse = new tiyse(array(
   'cache_dir' => '/cache/',
