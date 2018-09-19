@@ -34,7 +34,9 @@ $tiyse->draw("main",600);
 $tiyse = new tiyse(array(
   'cache_dir' => '/cache/',
   'tpl_dir'   => '/templates/Default/',
-  'tpl_ext'   => 'tpl'
+  'tpl_ext'   => 'tpl',
+  'gzcompress' => true,
+  'gzempty'    => true
 ));
 
 // etiket değiştirmek isterseniz
@@ -111,15 +113,15 @@ $tiyse->draw("main");
 
 $tiyse = new tiyse(array(
   // şablon önbellek klasörü
-  'cache_dir' => '/cache/',
+  'cache_dir'  => '/cache/',
   // şablon klasörü
-  'tpl_dir'   => '/templates/Default/',
+  'tpl_dir'    => '/templates/Default/',
   // şablon dosya uzantısı
-  'tpl_ext'   => 'tpl'
+  'tpl_ext'    => 'tpl',
   // kod sıkıştırmayı aktifleştir
-	'gzcompress' => true,
+  'gzcompress' => true,
   // kod boşluklarını kaldırmayı aktifleştir
-	'gzempty'    => true
+  'gzempty'    => true
 ));
 
 ?>
